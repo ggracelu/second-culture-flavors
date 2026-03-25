@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Second Culture — Global Yogurt Flavors</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson@3/dist/topojson.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F8F3EC;
+      --off:     #EFE8DE;
+      --dark:    #2C1810;
+      --brown:   #6B4226;
+      --accent:  #B07848;
+      --border:  rgba(107,66,38,0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--dark); line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 60px;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--dark); letter-spacing: 0.03em; }
+    .nav-logo em { font-style: italic; color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav a { color: var(--brown); text-decoration: none; font-size: 0.78rem; font-weight: 500;
+            letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover { color: var(--dark); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(160deg, var(--cream) 0%, var(--off) 100%);
+      padding: 5rem 2rem 3rem; text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow { display: inline-block; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.5rem);
+      color: var(--dark); line-height: 1.15; margin-bottom: 0.9rem; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub { font-size: 0.95rem; font-weight: 300; color: var(--brown); max-width: 460px; margin: 0 auto; }
+
+    /* MAP SECTION */
+    .map-section { background: var(--cream); padding: 3rem 2rem 3rem; }
+    .map-card { max-width: 1020px; margin: 0 auto; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border); box-shadow: 0 4px 24px rgba(44,24,16,0.08); }
+    #world-map { display: block; width: 100%; height: auto; }
+
+    /* TOOLTIP */
+    #map-tooltip {
+      position: fixed; pointer-events: none; z-index: 300;
+      background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px 14px; min-width: 180px;
+      box-shadow: 0 6px 20px rgba(44,24,16,0.12);
+      opacity: 0; transition: opacity 0.15s;
+    }
+    #map-tooltip.show { opacity: 1; }
+    .tt-region { font-size: 0.8rem; font-weight: 600; color: var(--dark); margin-bottom: 5px; }
+    .tt-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
+    .tt-flavors { font-size: 0.75rem; color: var(--brown); line-height: 1.5; }
+
+    /* LEGEND */
+    .map-legend { max-width: 1020px; margin: 1.2rem auto 0;
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; justify-content: center; }
+    .leg { display: flex; align-items: center; gap: 6px;
+      font-size: 0.72rem; color: var(--brown); font-weight: 500; }
+    .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* GALLERY */
+    .gallery-section { padding: 5rem 2rem 6rem; background: var(--cream); }
+    .gallery-header { text-align: center; margin-bottom: 3rem; }
+    .section-eyebrow { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,3.5vw,2.5rem); color: var(--dark); }
+
+    .gallery-grid { max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.4rem; }
+
+    .card { border-radius: 12px; overflow: hidden; background: #fff;
+      box-shadow: 0 2px 16px rgba(44,24,16,0.07); transition: transform 0.22s, box-shadow 0.22s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(44,24,16,0.12); }
+    .card-visual { height: 140px; display: flex; align-items: center; justify-content: center;
+      font-size: 2.6rem; position: relative; }
+    .card-visual::after { content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.15)); }
+    .card-body { padding: 1.1rem 1.2rem 1.3rem; }
+    .card-tag { display: inline-block; font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #fff;
+      padding: 2px 9px; border-radius: 100px; margin-bottom: 0.5rem; }
+    .card-name { font-family: 'Playfair Display', serif; font-size: 1.05rem;
+      color: var(--dark); line-height: 1.3; margin-bottom: 0.4rem; }
+    .card-desc { font-size: 0.78rem; color: var(--brown); line-height: 1.55; }
+
+    /* FOOTER */
+    footer { background: var(--off); border-top: 1px solid var(--border);
+      color: var(--brown); text-align: center; padding: 2rem; font-size: 0.8rem; }
+    footer strong { color: var(--dark); font-weight: 600; }
+
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .card-visual { height: 110px; font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Second <em>Culture</em></div>
+  <ul>
+    <li><a href="#map-section">World Flavors</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <span class="hero-eyebrow">Small Batch · Multicultural · Handcrafted</span>
+  <h1>Yogurt Inspired<br>by <em>Every Culture</em></h1>
+  <p class="hero-sub">Each batch draws from a different corner of the world. Hover the map to explore the flavors that inspire us.</p>
+</section>
+
+<section class="map-section" id="map-section">
+  <div class="map-card">
+    <svg id="world-map" viewBox="0 0 960 500"></svg>
+  </div>
+  <div class="map-legend" id="map-legend"></div>
+</section>
+<div id="map-tooltip"></div>
+
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <p class="section-eyebrow">The Collection</p>
+    <h2 class="section-title">Past Flavor Creations</h2>
+  </div>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</section>
+
+<footer>
+  <p><strong>Second Culture</strong> &nbsp;·&nbsp; Small batch, big world &nbsp;·&nbsp; Made with love</p>
+</footer>
+
+<script>
+const regions = {
+  ea:  { name: 'East Asia',      color: '#7FAAA0', flavors: ['Matcha', 'Black Sesame', 'Kinako', 'Sakura', 'Yuzu', 'Oolong'] },
+  sea: { name: 'Southeast Asia', color: '#8AAF78', flavors: ['Ube', 'Pandan', 'Coconut', 'Mango', 'Taro', 'Lychee'] },
+  sas: { name: 'South Asia',     color: '#BFA070', flavors: ['Chai', 'Cardamom', 'Mango Lassi', 'Rose', 'Saffron'] },
+  me:  { name: 'Middle East',    color: '#B89870', flavors: ['Pistachio', 'Baklava', 'Rose Water', 'Jasmine', 'Date Honey'] },
+  eu:  { name: 'Europe',         color: '#9A90B8', flavors: ['Tiramisu', 'Lavender', 'Crème Brûlée', 'Elderflower', 'Berry'] },
+  af:  { name: 'Africa',         color: '#B87060', flavors: ['Hibiscus', 'Ginger', 'Baobab', 'Tamarind', 'Moringa'] },
+  la:  { name: 'Latin America',  color: '#B89848', flavors: ['Horchata', 'Passion Fruit', 'Guava', 'Hibiscus', 'Dulce de Leche'] },
+  na:  { name: 'North America',  color: '#7898B0', flavors: ['Maple', 'Wild Blueberry', 'Vanilla Bean', 'Peach', 'Honey Oat'] },
+};
+
+// ISO 3166-1 numeric → region key
+const regionMap = {
+  // East Asia
+  156:'ea',392:'ea',410:'ea',408:'ea',496:'ea',
+  // Southeast Asia
+  360:'sea',764:'sea',704:'sea',458:'sea',608:'sea',116:'sea',418:'sea',104:'sea',702:'sea',96:'sea',626:'sea',
+  // South Asia
+  356:'sas',50:'sas',524:'sas',586:'sas',144:'sas',64:'sas',462:'sas',
+  // Middle East
+  682:'me',784:'me',792:'me',364:'me',368:'me',376:'me',400:'me',414:'me',422:'me',512:'me',634:'me',760:'me',887:'me',275:'me',
+  // Europe
+  276:'eu',250:'eu',380:'eu',724:'eu',620:'eu',300:'eu',528:'eu',56:'eu',208:'eu',578:'eu',752:'eu',246:'eu',
+  826:'eu',372:'eu',40:'eu',756:'eu',348:'eu',642:'eu',100:'eu',203:'eu',703:'eu',616:'eu',191:'eu',70:'eu',
+  688:'eu',807:'eu',499:'eu',8:'eu',705:'eu',352:'eu',440:'eu',428:'eu',233:'eu',112:'eu',804:'eu',498:'eu',643:'eu',
+  // Africa
+  12:'af',818:'af',434:'af',504:'af',788:'af',24:'af',204:'af',72:'af',854:'af',108:'af',
+  120:'af',140:'af',148:'af',180:'af',178:'af',266:'af',288:'af',324:'af',384:'af',404:'af',
+  450:'af',454:'af',466:'af',478:'af',508:'af',516:'af',562:'af',566:'af',646:'af',686:'af',
+  694:'af',706:'af',710:'af',728:'af',748:'af',834:'af',768:'af',800:'af',894:'af',716:'af',231:'af',232:'af',
+  // Latin America
+  32:'la',68:'la',76:'la',152:'la',170:'la',188:'la',192:'la',214:'la',218:'la',222:'la',
+  320:'la',332:'la',340:'la',484:'la',558:'la',591:'la',600:'la',604:'la',858:'la',862:'la',
+  // North America
+  124:'na',840:'na',
+};
+
+// Build legend
+const legendEl = document.getElementById('map-legend');
+for (const [id, r] of Object.entries(regions)) {
+  legendEl.insertAdjacentHTML('beforeend',
+    `<div class="leg"><div class="leg-dot" style="background:${r.color}"></div><span>${r.name}</span></div>`);
+}
+
+// Gallery data
+const flavors = [
+  { name:'Ube Crème Brûlée',              region:'sea', emoji:'🍇', grad:'linear-gradient(135deg,#6B2FA0,#D4A843)',    desc:'Filipino ube meets French crème brûlée — silky purple cream with a caramelized sugar finish.' },
+  { name:'Matcha Raspberry',              region:'ea',  emoji:'🍵', grad:'linear-gradient(135deg,#2E7D52,#D4365E)',    desc:'Earthy ceremonial-grade matcha swirled with tart wild raspberries for bright contrast.' },
+  { name:'Black Sesame Kinako',           region:'ea',  emoji:'🖤', grad:'linear-gradient(135deg,#1C1C1C,#C4956A)',    desc:'Nutty black sesame paste balanced with the sweet, toasty warmth of roasted soy flour.' },
+  { name:'Pistachio Jasmine Grape',       region:'me',  emoji:'🌿', grad:'linear-gradient(135deg,#5E9B5A,#7B5EA7)',    desc:'Rich pistachio cream with delicate jasmine blossoms and plump Muscat grapes.' },
+  { name:'Pistachio Baklava',             region:'me',  emoji:'🥐', grad:'linear-gradient(135deg,#6EA85A,#D4A843)',    desc:'Layers of honey, pistachio, and warm spice — a yogurt tribute to the classic pastry.' },
+  { name:'Pear Cardamom Chai',            region:'sas', emoji:'🍐', grad:'linear-gradient(135deg,#D4B060,#7A4018)',    desc:'Ripe Bartlett pear with warming cardamom and the spiced depth of masala chai.' },
+  { name:'Tiramisu',                      region:'eu',  emoji:'☕', grad:'linear-gradient(135deg,#3A1E0A,#E8D5B8)',    desc:'Espresso-soaked ladyfingers, mascarpone, and dusted dark cocoa — no fork needed.' },
+  { name:'Sakura Mochi',                  region:'ea',  emoji:'🌸', grad:'linear-gradient(135deg,#F4A8C0,#FAE8F0)',    desc:'Cherry blossom season captured in yogurt — floral, pillowy, and perfectly blush pink.' },
+  { name:'Mango Sticky Rice',             region:'sea', emoji:'🥭', grad:'linear-gradient(135deg,#F4D03F,#E8EDD0)',    desc:'Sun-ripened Thai mango with jasmine rice and coconut cream. A street-food icon, spooned.' },
+  { name:'Mango Pomelo',                  region:'sea', emoji:'🍊', grad:'linear-gradient(135deg,#FF8C42,#F4A0B0)',    desc:'Tropical mango meets bright, citrusy pomelo for a fresh and vibrant summer bowl.' },
+  { name:'Strawberry Horchata',           region:'la',  emoji:'🍓', grad:'linear-gradient(135deg,#C0392B,#F5E6D0)',    desc:'Sweet strawberries swirled with creamy, cinnamon-rice spice of classic horchata.' },
+  { name:'Chocolate Covered Strawberry',  region:'eu',  emoji:'🍫', grad:'linear-gradient(135deg,#2C0D06,#C0392B)',    desc:'Bittersweet dark chocolate draped over ripe strawberry — a timeless pairing, reimagined.' },
+];
+
+const grid = document.getElementById('gallery-grid');
+for (const f of flavors) {
+  const r = regions[f.region];
+  grid.insertAdjacentHTML('beforeend', `
+    <div class="card">
+      <div class="card-visual" style="background:${f.grad}">
+        <span style="position:relative;z-index:1">${f.emoji}</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag" style="background:${r.color}">${r.name}</span>
+        <div class="card-name">${f.name}</div>
+        <div class="card-desc">${f.desc}</div>
+      </div>
+    </div>`);
+}
+
+// D3 world map
+const width = 960, height = 500;
+const svg = d3.select('#world-map').attr('viewBox', `0 0 ${width} ${height}`);
+const projection = d3.geoNaturalEarth1().scale(153).translate([width/2, height/2]);
+const path = d3.geoPath().projection(projection);
+const tooltip = document.getElementById('map-tooltip');
+const neutral = '#D4C8B4';
+
+d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+  // Ocean
+  svg.append('rect').attr('width', width).attr('height', height).attr('fill', '#D8E8F0');
+
+  // Graticule
+  svg.append('path').datum(d3.geoGraticule()())
+    .attr('d', path).attr('fill', 'none')
+    .attr('stroke', 'rgba(255,255,255,0.35)').attr('stroke-width', 0.4);
+
+  // Countries
+  const countries = topojson.feature(world, world.objects.countries);
+  svg.selectAll('path.country')
+    .data(countries.features)
+    .join('path')
+    .attr('class', 'country')
+    .attr('d', path)
+    .attr('fill', d => {
+      const rid = regionMap[+d.id];
+      return rid ? regions[rid].color : neutral;
+    })
+    .attr('stroke', '#fff')
+    .attr('stroke-width', 0.4)
+    .style('cursor', d => regionMap[+d.id] ? 'pointer' : 'default')
+    .on('mouseover', function(event, d) {
+      const rid = regionMap[+d.id];
+      if (!rid) return;
+      d3.select(this).attr('fill', d3.color(regions[rid].color).brighter(0.5));
+      const r = regions[rid];
+      tooltip.innerHTML = `<div class="tt-region">${r.name}</div>
+        <div class="tt-label">Flavor Inspirations</div>
+        <div class="tt-flavors">${r.flavors.join(' &middot; ')}</div>`;
+      tooltip.classList.add('show');
+    })
+    .on('mousemove', function(event) {
+      const x = event.clientX, y = event.clientY;
+      const tw = tooltip.offsetWidth;
+      tooltip.style.left = (x + tw + 20 > window.innerWidth ? x - tw - 12 : x + 14) + 'px';
+      tooltip.style.top = (y - 10) + 'px';
+    })
+    .on('mouseout', function(event, d) {
+      const rid = regionMap[+d.id];
+      if (!rid) return;
+      d3.select(this).attr('fill', regions[rid].color);
+      tooltip.classList.remove('show');
+    });
+
+  // Sphere outline
+  svg.append('path').datum({type:'Sphere'}).attr('d', path)
+    .attr('fill', 'none').attr('stroke', '#A8C4D8').attr('stroke-width', 0.8);
+});
+</script>
+</body>
+</html>
