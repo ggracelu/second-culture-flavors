@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Second Culture — Build Your Bowl</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-brand">Second <em>Culture</em></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#build">Build a Bowl</a></li>
+    <li><a href="#popups">Pop-ups</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="https://forms.gle/Hc1dRivx1sPwyhvw7" target="_blank" class="nav-cta">Join Waitlist</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Hyde Park, Chicago</span>
+    <h1 class="hero-h">
+      <span class="hw bounce-in" style="--d:0s">SECOND</span>
+      <span class="hw bounce-in italic" style="--d:.12s">CULTURE</span>
+    </h1>
+    <p class="hero-p">Handcrafted double-strained yogurt where Chinese-American flavors meet global inspiration. Biweekly Sunday pop-ups in Hyde Park.</p>
+    <div class="hero-actions">
+      <a href="#build" class="btn-brick">Build Your Bowl ↓</a>
+      <a href="https://www.instagram.com/sec_culture/" target="_blank" class="btn-ghost">@sec_culture ↗</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="float-bowl fb-1"><img src="../assets/photos/hero-bowl-rose.png" alt="Rose bowl"/></div>
+    <div class="float-bowl fb-2"><img src="../assets/photos/bowl-matcha.png" alt="Matcha bowl"/></div>
+    <div class="float-bowl fb-3"><img src="../assets/photos/bowl-mango.png" alt="Mango bowl"/></div>
+    <div class="float-pill fp-1">$8 / bowl</div>
+    <div class="float-pill fp-2">4+ toppings</div>
+    <div class="float-pill fp-3">Hyde Park</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>Ube Crème Brûlée</span><span class="s">★</span>
+    <span>Black Sesame Kinako</span><span class="s">★</span>
+    <span>Mango Sticky Rice</span><span class="s">★</span>
+    <span>Matcha Raspberry</span><span class="s">★</span>
+    <span>Sakura Mochi</span><span class="s">★</span>
+    <span>Pistachio Baklava</span><span class="s">★</span>
+    <span>Strawberry Horchata</span><span class="s">★</span>
+    <span>Tiramisu</span><span class="s">★</span>
+    <span>Ube Crème Brûlée</span><span class="s">★</span>
+    <span>Black Sesame Kinako</span><span class="s">★</span>
+    <span>Mango Sticky Rice</span><span class="s">★</span>
+    <span>Matcha Raspberry</span><span class="s">★</span>
+    <span>Sakura Mochi</span><span class="s">★</span>
+    <span>Pistachio Baklava</span><span class="s">★</span>
+    <span>Strawberry Horchata</span><span class="s">★</span>
+    <span>Tiramisu</span><span class="s">★</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-text fade-up">
+      <span class="section-eye">Our Story</span>
+      <h2>Yogurt bowls are<br><em>the next big thing.</em></h2>
+      <p>I started Second Culture by making yogurt from scratch in my college apartment because I believe that yogurt bowls can be the next big thing following the boba and matcha crazes.</p>
+      <p>Our yogurt is double strained for maximum thickness and high protein, and highlights Chinese and multicultural flavors. Each bowl is thoughtfully crafted for a unique balance of textures and flavors, from Ube Creme Brulee to Black Sesame Kinako.</p>
+      <p>Our brand name, Second Culture, is based on the double meaning of the word <em>culture</em>: culture as in yogurt, of course, but also bringing in my background as a Chinese-American to connect my two cultures through flavor.</p>
+    </div>
+    <div class="about-media fade-up" style="--d:.1s">
+      <video autoplay muted loop playsinline class="about-video">
+        <source src="../assets/video.mov" type="video/mp4"/>
+      </video>
+      <div class="about-photos-row">
+        <img src="../assets/photos/friends.png" alt="Team"/>
+        <img src="../assets/photos/gallery-1.png" alt="Gallery"/>
+        <img src="../assets/photos/gallery-2.png" alt="Gallery"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILD A BOWL (interactive drag & drop) -->
+<section class="build-section" id="build">
+  <div class="build-header fade-up">
+    <span class="section-eye">Interactive</span>
+    <h2>Build Your<br><em>Dream Bowl</em></h2>
+    <p>Drag your favorite flavors into the bowl to see what inspires you. Every Sunday we make these real.</p>
+  </div>
+  <div class="build-stage">
+    <div class="toppings-shelf" id="shelf">
+      <div class="topping-chip" draggable="true" data-label="Ube Crème Brûlée" data-color="#9B5FCF">
+        <span class="tc-emoji">🍇</span>
+        <span>Ube Crème Brûlée</span>
+      </div>
+      <div class="topping-chip" draggable="true" data-label="Black Sesame" data-color="#2C2C2C">
+        <span class="tc-emoji">🖤</span>
+        <span>Black Sesame</span>
+      </div>
+      <div class="topping-chip" draggable="true" data-label="Mango Sticky Rice" data-color="#F4B942">
+        <span class="tc-emoji">🥭</span>
+        <span>Mango Sticky Rice</span>
+      </div>
+      <div class="topping-chip" draggable="true" data-label="Matcha Raspberry" data-color="#3D7A52">
+        <span class="tc-emoji">🍵</span>
+        <span>Matcha Raspberry</span>
+      </div>
+      <div class="topping-chip" draggable="true" data-label="Sakura Mochi" data-color="#F4A8C0">
+        <span class="tc-emoji">🌸</span>
+        <span>Sakura Mochi</span>
+      </div>
+      <div class="topping-chip" draggable="true" data-label="Pistachio Baklava" data-color="#7EAB68">
+        <span class="tc-emoji">🥐</span>
+        <span>Pistachio Baklava</span>
+      </div>
+      <div class="topping-chip" draggable="true" data-label="Tiramisu" data-color="#6B3A1F">
+        <span class="tc-emoji">☕</span>
+        <span>Tiramisu</span>
+      </div>
+      <div class="topping-chip" draggable="true" data-label="Strawberry Horchata" data-color="#C0392B">
+        <span class="tc-emoji">🍓</span>
+        <span>Strawberry Horchata</span>
+      </div>
+    </div>
+
+    <div class="bowl-zone">
+      <div class="bowl-container" id="bowl-drop">
+        <div class="bowl-bg">
+          <img src="../assets/photos/hero-bowl-rose.png" alt="Bowl" class="bowl-img"/>
+        </div>
+        <div class="bowl-chips" id="bowl-chips"></div>
+        <div class="bowl-placeholder" id="bowl-placeholder">
+          <span>Drop flavors here</span>
+          <span class="bp-hint">↑ drag from above ↑</span>
+        </div>
+      </div>
+      <div class="bowl-cta fade-up">
+        <p class="bowl-note" id="bowl-note">Add at least 4 toppings!</p>
+        <a href="https://forms.gle/Hc1dRivx1sPwyhvw7" target="_blank" class="btn-brick">Order at the next pop-up ↗</a>
+        <button class="btn-clear" id="clear-bowl">Clear bowl</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery fade-up">
+  <div class="gallery-grid">
+    <img src="../assets/photos/bowl-sticky-rice.png" alt="" class="gg-tall"/>
+    <img src="../assets/photos/bowl-spoons.png" alt=""/>
+    <img src="../assets/photos/gallery-3.png" alt=""/>
+    <img src="../assets/photos/gallery-4.png" alt="" class="gg-wide"/>
+    <img src="../assets/photos/gallery-5.png" alt=""/>
+    <img src="../assets/photos/gallery-6.png" alt=""/>
+  </div>
+</section>
+
+<!-- POP-UPS -->
+<section class="popups" id="popups">
+  <div class="pu-head fade-up">
+    <span class="section-eye">Events</span>
+    <h2>Past Pop-ups</h2>
+    <p>We host biweekly Sunday pop-ups in Hyde Park. Orders open every Monday before the event. We sell out fast — <a href="https://forms.gle/Hc1dRivx1sPwyhvw7" target="_blank">sign up for priority access.</a></p>
+  </div>
+  <div class="pu-cards">
+    <div class="pu-card fade-up">
+      <div class="pu-card-top">
+        <div class="pu-tag">March 1, 2025</div>
+        <h3>Fool's Spring</h3>
+        <p>Embracing the fleeting warmth of early spring — light, fresh, and a little hopeful.</p>
+        <a href="https://www.instagram.com/sec_culture/" target="_blank">View on Instagram →</a>
+      </div>
+      <div class="pu-imgs">
+        <img src="../assets/menus/fools-spring-1.png" alt=""/>
+        <img src="../assets/menus/fools-spring-2.png" alt=""/>
+        <img src="../assets/menus/fools-spring-3.png" alt=""/>
+        <img src="../assets/menus/fools-spring-4.png" alt=""/>
+        <img src="../assets/menus/fools-spring-5.png" alt=""/>
+      </div>
+    </div>
+    <div class="pu-card fade-up" style="--d:.1s">
+      <div class="pu-card-top">
+        <div class="pu-tag">February 15, 2025</div>
+        <h3>Valentine's Day</h3>
+        <p>Romantic flavors and bold pairings — because love deserves the best bowl.</p>
+        <a href="https://www.instagram.com/sec_culture/" target="_blank">View on Instagram →</a>
+      </div>
+      <div class="pu-imgs">
+        <img src="../assets/menus/valentines-1.png" alt=""/>
+        <img src="../assets/menus/valentines-2.png" alt=""/>
+        <img src="../assets/menus/valentines-3.png" alt=""/>
+        <img src="../assets/menus/valentines-4.png" alt=""/>
+        <img src="../assets/menus/valentines-5.png" alt=""/>
+      </div>
+    </div>
+    <div class="pu-card fade-up" style="--d:.2s">
+      <div class="pu-card-top">
+        <div class="pu-tag">February 1, 2025</div>
+        <h3>Pilot Pop-up</h3>
+        <p>Where it all began. Our inaugural pop-up, the one that started everything.</p>
+        <a href="https://www.instagram.com/sec_culture/" target="_blank">View on Instagram →</a>
+      </div>
+      <div class="pu-imgs">
+        <img src="../assets/photos/gallery-7.png" alt=""/>
+        <img src="../assets/photos/gallery-8.png" alt=""/>
+        <img src="../assets/photos/gallery-9.png" alt=""/>
+        <img src="../assets/photos/gallery-10.png" alt=""/>
+        <img src="../assets/photos/gallery-11.png" alt=""/>
+      </div>
+    </div>
+  </div>
+  <div class="pu-next fade-up">
+    <span>Next pop-up — TBD</span>
+    <a href="https://forms.gle/Hc1dRivx1sPwyhvw7" target="_blank" class="btn-brick">Get Early Access ↗</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <h2 class="faq-h fade-up">Questions?<br><em>We've got answers.</em></h2>
+    <div class="faq-list">
+      <div class="faq-item fade-up">
+        <button class="faq-q">How can I try Second Culture Yogurt? <span>+</span></button>
+        <div class="faq-a">We host pop-ups at my apartment in Hyde Park, Chicago on a biweekly basis.</div>
+      </div>
+      <div class="faq-item fade-up" style="--d:.08s">
+        <button class="faq-q">How can I place an order for a pop-up? <span>+</span></button>
+        <div class="faq-a">We use a pre-order system, accepting orders the Monday before the pop-up takes place on Sunday. Due to limited capacity, we sell out quickly so we recommend signing up through our interest form to get priority access.</div>
+      </div>
+      <div class="faq-item fade-up" style="--d:.16s">
+        <button class="faq-q">How much are your yogurt bowls? <span>+</span></button>
+        <div class="faq-a">Each bowl is $8 and comes with 5.3 oz of our double-strained homemade yogurt and 4+ toppings, with exact ingredients varying by the flavor. The portion size is similar to yogurt bowls at brunch restaurants or acai bowls.</div>
+      </div>
+      <div class="faq-item fade-up">
+        <button class="faq-q">What about allergies or dietary restrictions? <span>+</span></button>
+        <div class="faq-a">We are happy to remove any toppings upon request. However, the base yogurt recipe cannot be changed to order, and it is made from whole milk.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="ft-brand">SECOND<br><em>CULTURE</em></div>
+    <div class="ft-mid">
+      <a href="https://www.instagram.com/sec_culture/" target="_blank">@sec_culture on Instagram</a>
+      <span>·</span><span>Hyde Park, Chicago</span>
+      <span>·</span><span>Biweekly Sundays</span>
+    </div>
+    <div class="ft-right">
+      <a href="https://forms.gle/Hc1dRivx1sPwyhvw7" target="_blank" class="btn-cream">Join Interest List ↗</a>
+      <p>DM us with any questions or concerns.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 60), {passive:true});
+
+// Fade-up observer
+const obs = new IntersectionObserver(e => e.forEach(x => {
+  if (x.isIntersecting) {
+    x.target.style.transitionDelay = x.target.style.getPropertyValue('--d') || '0s';
+    x.target.classList.add('visible');
+    obs.unobserve(x.target);
+  }
+}), {threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement, open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(x => x.classList.remove('open'));
+    if (!open) item.classList.add('open');
+  });
+});
+
+// DRAG AND DROP BOWL BUILDER
+const shelf = document.getElementById('shelf');
+const dropZone = document.getElementById('bowl-drop');
+const bowlChips = document.getElementById('bowl-chips');
+const placeholder = document.getElementById('bowl-placeholder');
+const noteEl = document.getElementById('bowl-note');
+let droppedItems = [];
+let dragEl = null;
+
+document.querySelectorAll('.topping-chip').forEach(chip => {
+  chip.addEventListener('dragstart', e => {
+    dragEl = chip;
+    chip.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'copy';
+    e.dataTransfer.setData('text/plain', chip.dataset.label);
+  });
+  chip.addEventListener('dragend', () => chip.classList.remove('dragging'));
+});
+
+dropZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+  dropZone.classList.add('drag-over');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  if (!dragEl) return;
+  const label = dragEl.dataset.label;
+  const color = dragEl.dataset.color;
+  if (droppedItems.includes(label)) return; // no dupes
+  droppedItems.push(label);
+  addChipToBowl(label, color);
+  updateNote();
+});
+
+// Touch drag support
+document.querySelectorAll('.topping-chip').forEach(chip => {
+  chip.addEventListener('touchstart', e => { dragEl = chip; chip.classList.add('dragging'); }, {passive:true});
+  chip.addEventListener('touchend', e => {
+    chip.classList.remove('dragging');
+    const touch = e.changedTouches[0];
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (el && (el === dropZone || dropZone.contains(el))) {
+      const label = chip.dataset.label;
+      const color = chip.dataset.color;
+      if (!droppedItems.includes(label)) {
+        droppedItems.push(label);
+        addChipToBowl(label, color);
+        updateNote();
+      }
+    }
+    dragEl = null;
+  }, {passive:true});
+});
+
+function addChipToBowl(label, color) {
+  if (placeholder) placeholder.style.display = 'none';
+  const chip = document.createElement('div');
+  chip.className = 'bowl-topping-chip pop-in';
+  chip.style.setProperty('--chip-color', color);
+  chip.innerHTML = `<span>${label}</span><button onclick="removeFromBowl('${label}', this)" title="Remove">×</button>`;
+  bowlChips.appendChild(chip);
+  setTimeout(() => chip.classList.remove('pop-in'), 500);
+}
+
+function removeFromBowl(label, btn) {
+  const chip = btn.parentElement;
+  chip.style.animation = 'popOut .25s forwards';
+  setTimeout(() => {
+    chip.remove();
+    droppedItems = droppedItems.filter(d => d !== label);
+    if (droppedItems.length === 0 && placeholder) placeholder.style.display = '';
+    updateNote();
+  }, 250);
+}
+window.removeFromBowl = removeFromBowl;
+
+function updateNote() {
+  const n = droppedItems.length;
+  if (n === 0) noteEl.textContent = 'Add at least 4 toppings!';
+  else if (n < 4) noteEl.textContent = `${n}/4 toppings added — keep going!`;
+  else noteEl.textContent = `${n} flavors in your bowl. Come try it Sunday!`;
+}
+
+document.getElementById('clear-bowl').addEventListener('click', () => {
+  bowlChips.innerHTML = '';
+  droppedItems = [];
+  if (placeholder) placeholder.style.display = '';
+  updateNote();
+});
+</script>
+</body>
+</html>
